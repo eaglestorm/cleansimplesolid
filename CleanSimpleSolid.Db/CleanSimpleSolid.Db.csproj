@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>7.1</LangVersion>
+        <RootNamespace>ServiceBase.Db</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="dbup-core" Version="4.2.0" />
+      <PackageReference Include="dbup-postgresql" Version="4.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CleanDdd.Common\CleanDdd.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Scripts\Data" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Scripts\Schema\Schema-20190314.sql" />
+      <EmbeddedResource Include="Scripts\Schema\Schema-20190314.sql" />
+    </ItemGroup>
+
+</Project>

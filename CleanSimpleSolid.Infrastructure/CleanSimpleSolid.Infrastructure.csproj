@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>7.1</LangVersion>
+        <RootNamespace>ServiceBase.Infrastructure</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="4.9.1" />
+      <PackageReference Include="Dapper" Version="1.60.6" />
+      <PackageReference Include="Dapper.Contrib" Version="1.60.1" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
+      <PackageReference Include="Npgsql" Version="4.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CleanSimpleSolid.Core\CleanSimpleSolid.Core.csproj" />
+    </ItemGroup>
+
+</Project>

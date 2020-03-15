@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>7.1</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Events" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CleanDdd.Common\CleanDdd.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="4.9.1" />
+      <PackageReference Include="MediatR" Version="6.0.0" />
+    </ItemGroup>
+
+</Project>
