@@ -8,4 +8,4 @@ but hopefully it will be good enough to help people understand why this should b
 
 Clean Architecture is a way of using the SOLID rules to structure your projects.
 
-![Clean Architecture Projects][CleanSimpleSolid - Projects.png]
+![Clean Architecture Projects](CleanSimpleSolid - Projects.png)
