@@ -12,6 +12,11 @@ using ServiceBase.Infrastructure.Records;
 
 namespace ServiceBase.Infrastructure.Repository
 {
+    /// <summary>
+    /// Repository implementation.
+    /// Implements the interface in the Core.  Inversion of Control Pattern, Core retains control as it has the interface.
+    /// Allows user cases and services in core to user the repository without core needing to reference this project.
+    /// </summary>
     public class TaskRepository: ITaskRepository
     {
         private readonly IMapper _mapper;
@@ -45,17 +50,51 @@ namespace ServiceBase.Infrastructure.Repository
             }
         }
 
-        public async Task<Todo> Save(Todo exampleModel)
+        public async Task<Todo> Save(Todo todo)
         {
-            var sql = "insert into tasks (name, description, dueDate, scheduledDate) values(@p1,@p2) returning id";
+            if (todo.Id.HasValue())
+            {
+                return await Update(todo);
+            }
+
+            return await Insert(todo);
+        }
+
+        private async Task<Todo> Insert(Todo todo)
+        {
+            var sql = "insert into tasks (name, description, dueDate, scheduledDate) values(@name,@desc,@due,@scheduled) returning id";
 
             using (var conn = new NpgsqlConnection(_dbSettings.GetConnectionString()))
             {
-                var result = await conn.ExecuteScalarAsync(sql,new {p1 = exampleModel.Name,p2 = exampleModel.DueDate});
-                exampleModel.Id.SetIdentity((long)result);
+                var result = await conn.ExecuteScalarAsync(sql,new
+                {
+                    name = todo.Name,
+                    desc = todo.Description, 
+                    due = todo.DueDate, 
+                    scheduled = todo.ScheduleDate
+                });
+                todo.Id.SetIdentity((long)result);
             }
 
-            return exampleModel;
+            return todo;
+        }
+
+        private async Task<Todo> Update(Todo todo)
+        {
+            var sql = "update tasks set name = @name, description = @desc, dueDate = @due, scheduledDate = @scheduled) values(@p1,@p2) returning id";
+
+            using (var conn = new NpgsqlConnection(_dbSettings.GetConnectionString()))
+            {
+                var result = await conn.ExecuteScalarAsync(sql,new
+                {
+                    name = todo.Name,
+                    desc = todo.Description, 
+                    due = todo.DueDate, 
+                    scheduled = todo.ScheduleDate
+                });
+            }
+
+            return todo;
         }
     }
 }

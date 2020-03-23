@@ -13,6 +13,6 @@ namespace CleanSimpleSolid.Core.Interfaces
         
         Task<IList<Todo>> Get(int index, int size);
 
-        Task<Todo> Save(Todo exampleModel);
+        Task<Todo> Save(Todo todo);
     }
 }
