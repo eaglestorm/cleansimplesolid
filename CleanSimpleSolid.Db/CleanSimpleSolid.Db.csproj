@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>7.1</LangVersion>
         <RootNamespace>ServiceBase.Db</RootNamespace>
     </PropertyGroup>
@@ -17,12 +17,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Scripts\Data" />
+      <None Remove="Scripts\Schema\Schema-20190314.sql" />
+      <EmbeddedResource Include="Scripts\Schema\Schema-20190314.sql" />
+      <EmbeddedResource Remove="Scripts\Data\**" />
+      <None Remove="Scripts\Data\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Scripts\Schema\Schema-20190314.sql" />
-      <EmbeddedResource Include="Scripts\Schema\Schema-20190314.sql" />
+      <Compile Remove="Scripts\Data\**" />
     </ItemGroup>
 
 </Project>

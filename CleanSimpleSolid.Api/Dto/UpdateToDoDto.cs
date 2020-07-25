@@ -1,6 +1,6 @@
 namespace ServiceBase.Dto
 {
-    public class UpdateExampleDto
+    public class UpdateToDoDto
     {
         public long Id { get; set; }
         

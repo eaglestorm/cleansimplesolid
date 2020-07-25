@@ -9,10 +9,10 @@ namespace CleanSimpleSolid.Core.Interfaces
     /// </summary>
     public interface ITaskRepository
     {
-        Task<Todo> Get(long id);
+        Task<CssTask> Get(long id, long user);
         
-        Task<IList<Todo>> Get(int index, int size);
+        Task<IList<CssTask>> Get(long user, int index, int size);
 
-        Task<Todo> Save(Todo todo);
+        Task<CssTask> Save(CssTask cssTask);
     }
 }

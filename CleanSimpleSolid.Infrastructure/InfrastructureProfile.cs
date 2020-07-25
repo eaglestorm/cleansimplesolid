@@ -1,6 +1,7 @@
 using AutoMapper;
 using CleanDdd.Common.Model.Identity;
 using CleanSimpleSolid.Core.Model.Tasks;
+using CleanSimpleSolid.Core.Model.User;
 using ServiceBase.Infrastructure.Records;
 
 namespace ServiceBase.Infrastructure
@@ -9,8 +10,9 @@ namespace ServiceBase.Infrastructure
     {
         public InfrastructureProfile()
         {
-            CreateMap<ExampleRecord, Todo>();
+            CreateMap<CssTaskRecord, CssTask>();
             CreateMap<long, LongIdentity>().ConstructUsing(x=> new LongIdentity(x));
+            CreateMap<CssUserRecord, CssUser>();
         }
     }
 }

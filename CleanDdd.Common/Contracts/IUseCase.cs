@@ -7,7 +7,7 @@ namespace CleanConnect.Common.Contracts
     /// </summary>
     /// <typeparam name="TRequest"></typeparam>
     /// <typeparam name="TResponse"></typeparam>
-    public interface IUseCase< in TRequest, out TResponse>
+    public interface IUseCase< in TRequest, TResponse>
      where TRequest : IMessage<TResponse>
     {
         /// <summary>
@@ -19,7 +19,7 @@ namespace CleanConnect.Common.Contracts
         /// </remarks>
         /// <param name="request"></param>
         /// <returns></returns>
-        TResponse Process(TRequest request);
+        Task<TResponse> Process(TRequest request);
     }
     
     /// <summary>
@@ -33,6 +33,6 @@ namespace CleanConnect.Common.Contracts
         /// Process the request.
         /// </summary>
         /// <param name="request"></param>
-        void Process(TRequest request);
+        Task Process(TRequest request);
     }
 }

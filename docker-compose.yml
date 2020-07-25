@@ -1,0 +1,36 @@
+version: '2.0'
+services:
+  smtp4dev:
+    image: rnwood/smtp4dev:v3
+    ports:
+    - '5400:80'
+    - '2525:25'
+  myvault:
+    image: vault
+    container_name: myvault
+    ports:
+      - "127.0.0.1:8200:8200"
+    volumes:
+      - ./vault/file:/vault/file:rw
+      - ./vault/config:/vault/config:rw
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault.json
+  postgres:
+    # Image name
+    image: postgres
+    # Expose the port on your local machine.
+    # This is not needed to link containers.
+    # BUT, it is handy for connecting to your
+    # database with something like DataGrip from
+    # you local host machine.
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=cssdemo
+      - POSTGRES_USER=cssdemo
+      - DB_FPET_FP_NAME=cssdemo
+    
+volumes:
+  file:
+  config:

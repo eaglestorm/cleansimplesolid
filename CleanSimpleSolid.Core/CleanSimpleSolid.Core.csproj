@@ -1,13 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>7.1</LangVersion>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Folder Include="Events" />
-    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\CleanDdd.Common\CleanDdd.Common.csproj" />
@@ -16,6 +12,11 @@
     <ItemGroup>
       <PackageReference Include="Autofac" Version="4.9.1" />
       <PackageReference Include="MediatR" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Messages\User" />
     </ItemGroup>
 
 </Project>

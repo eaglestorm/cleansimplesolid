@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using AutoMapper;
 using CleanConnect.Common.Model.Errors;
+using ServiceBase.Core.Messages;
 using ServiceBase.Dto;
 
 namespace ServiceBase
@@ -12,6 +13,7 @@ namespace ServiceBase
         {
             CreateMap<ErrorCode, ErrorDto>().ForMember(x=>x.Description,opt=>opt.MapFrom(src=>src.GetInternalDescription()));
             CreateMap<Task, TaskDto>();
+            CreateMap<CreateTaskDto, CreateTaskRequest>();
         }
     }
 }

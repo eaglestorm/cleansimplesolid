@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.VisualBasic.CompilerServices;
-
+﻿
 namespace CleanConnect.Common.Model.Errors
 {
     /// <summary>
@@ -10,7 +8,6 @@ namespace CleanConnect.Common.Model.Errors
     /// Contains two different classes of errors.
     /// https://martinfowler.com/articles/replaceThrowWithNotification.html
     ///
-    /// Note:  the errors indicated here are more than allowed by the spec so most of these will only be logged. 
     /// </remarks>
     public sealed class ErrorCode
     {        

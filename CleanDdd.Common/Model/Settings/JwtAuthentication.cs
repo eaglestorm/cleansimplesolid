@@ -9,6 +9,8 @@ namespace CleanDdd.Common.Model.Settings
         public string ValidIssuer { get; set; }
         public string ValidAudience { get; set; }
         
+        public string Authority { get; set; }
+        
         /// <summary>
         /// Timeout of the token in minutes.
         /// </summary>

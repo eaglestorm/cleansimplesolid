@@ -17,6 +17,9 @@ namespace ServiceBase.Infrastructure.Repository
     /// Implements the interface in the Core.  Inversion of Control Pattern, Core retains control as it has the interface.
     /// Allows user cases and services in core to user the repository without core needing to reference this project.
     /// </summary>
+    /// <remarks>
+    /// TODO: caching.
+    /// </remarks>
     public class TaskRepository: ITaskRepository
     {
         private readonly IMapper _mapper;
@@ -28,39 +31,39 @@ namespace ServiceBase.Infrastructure.Repository
             _dbSettings = options.Value;
         }
         
-        public async Task<Todo> Get(long id)
+        public async Task<CssTask> Get(long id, long user)
         {
-            var sql = "select id, name, description, dueDate, scheduledDate from tasks where id = @id";
+            var sql = "select id, name, description, dueDate, scheduledDate from tasks where id = @id and userId = @uid";
 
             using (var conn = new NpgsqlConnection(_dbSettings.GetConnectionString()))
             {
-                var result = await conn.QueryAsync<ExampleRecord>(sql,new { id=id});
-                return _mapper.Map<Todo>(result);
+                var result = await conn.QueryAsync<CssTaskRecord>(sql,new { id=id, uid = user});
+                return _mapper.Map<CssTask>(result);
             }
         }
 
-        public async Task<IList<Todo>> Get(int index, int size)
+        public async Task<IList<CssTask>> Get(long user, int index, int size)
         {
-            var sql = "select id, name, description, dueDate, scheduledDate from tasks limit @size offset @index";
+            var sql = "select id, name, description, dueDate, scheduledDate from tasks where userId = @uid limit @size offset @index";
 
             using (var conn = new NpgsqlConnection(_dbSettings.GetConnectionString()))
             {
-                var result = await conn.QueryAsync<ExampleRecord>(sql,new { index = index, size = size});
-                return _mapper.Map<IList<Todo>>(result);
+                var result = await conn.QueryAsync<CssTaskRecord>(sql,new { index = index, size = size, uid = user});
+                return _mapper.Map<IList<CssTask>>(result);
             }
         }
 
-        public async Task<Todo> Save(Todo todo)
+        public async Task<CssTask> Save(CssTask cssTask)
         {
-            if (todo.Id.HasValue())
+            if (cssTask.Id.HasValue())
             {
-                return await Update(todo);
+                return await Update(cssTask);
             }
 
-            return await Insert(todo);
+            return await Insert(cssTask);
         }
 
-        private async Task<Todo> Insert(Todo todo)
+        private async Task<CssTask> Insert(CssTask cssTask)
         {
             var sql = "insert into tasks (name, description, dueDate, scheduledDate) values(@name,@desc,@due,@scheduled) returning id";
 
@@ -68,18 +71,18 @@ namespace ServiceBase.Infrastructure.Repository
             {
                 var result = await conn.ExecuteScalarAsync(sql,new
                 {
-                    name = todo.Name,
-                    desc = todo.Description, 
-                    due = todo.DueDate, 
-                    scheduled = todo.ScheduleDate
+                    name = cssTask.Name,
+                    desc = cssTask.Description, 
+                    due = cssTask.DueDate, 
+                    scheduled = cssTask.ScheduleDate
                 });
-                todo.Id.SetIdentity((long)result);
+                cssTask.Id.SetIdentity((long)result);
             }
 
-            return todo;
+            return cssTask;
         }
 
-        private async Task<Todo> Update(Todo todo)
+        private async Task<CssTask> Update(CssTask cssTask)
         {
             var sql = "update tasks set name = @name, description = @desc, dueDate = @due, scheduledDate = @scheduled) values(@p1,@p2) returning id";
 
@@ -87,14 +90,14 @@ namespace ServiceBase.Infrastructure.Repository
             {
                 var result = await conn.ExecuteScalarAsync(sql,new
                 {
-                    name = todo.Name,
-                    desc = todo.Description, 
-                    due = todo.DueDate, 
-                    scheduled = todo.ScheduleDate
+                    name = cssTask.Name,
+                    desc = cssTask.Description, 
+                    due = cssTask.DueDate, 
+                    scheduled = cssTask.ScheduleDate
                 });
             }
 
-            return todo;
+            return cssTask;
         }
     }
 }

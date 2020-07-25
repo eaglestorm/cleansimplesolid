@@ -34,6 +34,8 @@ namespace ServiceBase.Config
                 IssuerSigningKey = jwtAuthentication.SymmetricSecurityKey,
                 NameClaimType = ClaimTypes.NameIdentifier
             };
+            options.Authority = _jwtAuthentication.Authority;
+            
         }
     }
 }

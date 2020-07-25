@@ -1,16 +1,24 @@
+using System;
+using System.Collections.Generic;
 using CleanConnect.Common.Model.Errors;
 using CleanDdd.Common.Model.Identity;
 
 namespace CleanSimpleSolid.Core.Model.Tasks
 {
-    public class SubTask: Base<LongIdentity, long>, IValidator
+    public class SubTask: TaskBase
     {
-        private readonly string _name;
 
         public SubTask(string name)
+        :base(name)
         {
-            _name = name;
-            Errors = new Validations();
+            
+        }
+        
+        public SubTask(LongIdentity identity, string name, string description, DateTimeOffset dueDate,
+            DateTimeOffset scheduledDate, DateTimeOffset createdDate, DateTimeOffset modifiedDate)
+            :base(identity,name,description,dueDate,scheduledDate,createdDate,modifiedDate)
+        {
+
         }
 
         public bool IsValid()

@@ -3,15 +3,15 @@ using CleanConnect.Common.Model.Errors;
 
 namespace ServiceBase.Core.Messages
 {
-    public class UpdateExampleResponse: ResponseBase
+    public class UpdateTaskResponse: ResponseBase
     {
-        public UpdateExampleResponse(bool success)
+        public UpdateTaskResponse(bool success)
         :base(success)
         {
             
         }
 
-        public UpdateExampleResponse(bool success, Validations errors)
+        public UpdateTaskResponse(bool success, Validations errors)
         :base(success,errors)
         {
             

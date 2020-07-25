@@ -34,6 +34,11 @@ namespace CleanSimpleSolid.Core.Model
         /// <summary>
         /// The last time the model was modified.
         /// </summary>
-        public DateTimeOffset ModifiedDate { get; }
+        public DateTimeOffset ModifiedDate { get; private set; }
+
+        protected void SetModified()
+        {
+            ModifiedDate = DateTimeOffset.UtcNow;
+        }
     }
 }

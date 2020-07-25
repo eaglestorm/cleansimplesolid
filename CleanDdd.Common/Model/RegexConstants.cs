@@ -20,7 +20,7 @@ namespace CleanConnect.Common.Model
         private const           string UsernamePattern = @"^[\w\!@#$%^&\.\-\+]{8,25}$";
         public static readonly Regex  UsernameRegex   = new Regex(UsernamePattern);
 
-        private const           string DescriptionPattern = @"^[\w\s!@#$%&*^():;""'{}?\/\\]*$";
+        private const           string DescriptionPattern = @"^[\w\s!@#$%&*^():;""'{}?\/\\\.]*$";
         public static readonly Regex  DescriptionRegex   = new Regex(DescriptionPattern);
 
         private const           string PasswordPattern = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\-!$%^&*()_+|~=`{}\[\]:"";'<>?,.\/]).{6,24}$";

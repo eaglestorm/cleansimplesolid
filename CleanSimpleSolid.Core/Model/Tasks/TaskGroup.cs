@@ -9,17 +9,17 @@ namespace CleanSimpleSolid.Core.Model.Tasks
     {
         private const int NameMaxLength = 50;
 
-        private List<Todo> _tasks;
+        private List<CssTask> _tasks;
         
         public string Name { get; private set; }
 
-        public IEnumerable<Todo> Tasks => _tasks;
+        public IEnumerable<CssTask> Tasks => _tasks;
 
         public TaskGroup(string name)
         {
             Name = name;
             Errors = new Validations();
-            _tasks = new List<Todo>();
+            _tasks = new List<CssTask>();
         }
 
         public void SetName(string name)
@@ -43,7 +43,7 @@ namespace CleanSimpleSolid.Core.Model.Tasks
 
         public void AddTask(string name)
         {
-            _tasks.Add(new Todo(name));
+            _tasks.Add(new CssTask(name));
         }
 
         public bool IsValid()
