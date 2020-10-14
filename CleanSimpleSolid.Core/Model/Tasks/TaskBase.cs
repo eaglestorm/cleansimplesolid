@@ -105,6 +105,11 @@ namespace CleanSimpleSolid.Core.Model.Tasks
         /// <param name="desc"></param>
         public void SetDescription(string desc)
         {
+            if (desc == null)
+            {
+                Description = null;
+                return;
+            }
             var start = Errors.Count;
             if (!RegexConstants.DescriptionRegex.IsMatch(desc))
             {
@@ -131,8 +136,12 @@ namespace CleanSimpleSolid.Core.Model.Tasks
         /// Set the due date and also the scheduled date if it needs to be set.
         /// </summary>
         /// <param name="dueDate"></param>
-        public virtual void SetDueDate(DateTimeOffset dueDate)
+        public virtual void SetDueDate(DateTimeOffset? dueDate)
         {
+            if (!dueDate.HasValue)
+            {
+                DueDate = null;
+            }
             var start = Errors.Count;
             if (DateTimeOffset.Now > dueDate)
             {
@@ -153,8 +162,13 @@ namespace CleanSimpleSolid.Core.Model.Tasks
         /// Set the schedule date and ensure it is valid given the current due date.
         /// </summary>
         /// <param name="scheduledDate"></param>
-        public void SetScheduledDate(DateTimeOffset scheduledDate)
+        public void SetScheduledDate(DateTimeOffset? scheduledDate)
         {
+            if (!scheduledDate.HasValue)
+            {
+                ScheduleDate = null;
+                return;
+            }
             var start = Errors.Count;
             if (DateTimeOffset.Now > scheduledDate || scheduledDate > DueDate)
             {

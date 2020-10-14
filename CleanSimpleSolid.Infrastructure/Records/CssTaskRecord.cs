@@ -1,7 +1,9 @@
 using System;
+using Dapper.Contrib.Extensions;
 
 namespace ServiceBase.Infrastructure.Records
 {
+    [Table("task")]
     public class CssTaskRecord
     {
         public long Id { get; set; }
@@ -12,12 +14,12 @@ namespace ServiceBase.Infrastructure.Records
         /// <remarks>
         /// If you don't care when it was created or modified then it's likely not an entity and just a value object.
         /// </remarks>
-        public DateTimeOffset CreatedDate { get; }
+        public DateTimeOffset CreatedDate { get; set; }
         
         /// <summary>
         /// The last time the model was modified.
         /// </summary>
-        public DateTimeOffset ModifiedDate { get; }
+        public DateTimeOffset ModifiedDate { get; set; }
         
         /// <summary>
         /// The name of the task.

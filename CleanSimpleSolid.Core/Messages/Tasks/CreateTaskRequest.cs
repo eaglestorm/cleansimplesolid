@@ -16,9 +16,9 @@ namespace ServiceBase.Core.Messages
         
         public string Description { get; set; }
         
-        public DateTimeOffset DueDate { get; set; }
+        public DateTimeOffset? DueDate { get; set; }
         
-        public DateTimeOffset ScheduledDate { get; set; }
+        public DateTimeOffset? ScheduledDate { get; set; }
         
         public string Subject { get; set; }
         

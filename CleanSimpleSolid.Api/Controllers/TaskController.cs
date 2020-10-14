@@ -49,7 +49,7 @@ namespace ServiceBase.Controllers
 
         [Authorize]
         [HttpPost("/task")]
-        public async Task<IActionResult> Update(UpdateToDoDto dto)
+        public async Task<IActionResult> Update([FromBody]UpdateToDoDto dto)
         {
             //We are updating something so the use case manages the business and application logic.
             //The controller method handles transforming the response.
@@ -65,7 +65,7 @@ namespace ServiceBase.Controllers
 
         [Authorize]
         [HttpPut("/task")]
-        public async Task<IActionResult> Create(CreateTaskDto dto)
+        public async Task<IActionResult> Create([FromBody]CreateTaskDto dto)
         {
             //not sure if this is the best way but can't think of a better way.
             var usecase = new TaskCreatedUseCase(_taskRepository,_lifetimeScope.Resolve<ILogger<TaskCreatedUseCase>>());

@@ -33,7 +33,7 @@ namespace ServiceBase.Infrastructure.Repository
         
         public async Task<CssTask> Get(long id, long user)
         {
-            var sql = "select id, name, description, dueDate, scheduledDate from tasks where id = @id and userId = @uid";
+            var sql = "select id, name, description, dueDate, scheduledDate from task where id = @id and userId = @uid";
 
             using (var conn = new NpgsqlConnection(_dbSettings.GetConnectionString()))
             {
@@ -44,7 +44,7 @@ namespace ServiceBase.Infrastructure.Repository
 
         public async Task<IList<CssTask>> Get(long user, int index, int size)
         {
-            var sql = "select id, name, description, dueDate, scheduledDate from tasks where userId = @uid limit @size offset @index";
+            var sql = "select id, name, description, dueDate, scheduledDate from task where userId = @uid limit @size offset @index";
 
             using (var conn = new NpgsqlConnection(_dbSettings.GetConnectionString()))
             {
@@ -55,7 +55,7 @@ namespace ServiceBase.Infrastructure.Repository
 
         public async Task<CssTask> Save(CssTask cssTask)
         {
-            if (cssTask.Id.HasValue())
+            if (cssTask.Id != null && cssTask.Id.HasValue())
             {
                 return await Update(cssTask);
             }
@@ -65,7 +65,7 @@ namespace ServiceBase.Infrastructure.Repository
 
         private async Task<CssTask> Insert(CssTask cssTask)
         {
-            var sql = "insert into tasks (name, description, dueDate, scheduledDate) values(@name,@desc,@due,@scheduled) returning id";
+            var sql = "insert into task (name, description, dueDate, scheduledDate, createdDate, modifiedDate) values(@name,@desc,@due,@scheduled, @createdDate, @modifiedDate) returning id";
 
             using (var conn = new NpgsqlConnection(_dbSettings.GetConnectionString()))
             {
@@ -74,7 +74,9 @@ namespace ServiceBase.Infrastructure.Repository
                     name = cssTask.Name,
                     desc = cssTask.Description, 
                     due = cssTask.DueDate, 
-                    scheduled = cssTask.ScheduleDate
+                    scheduled = cssTask.ScheduleDate,
+                    createdDate = cssTask.CreatedDate,
+                    modifiedDate = cssTask.ModifiedDate
                 });
                 cssTask.Id.SetIdentity((long)result);
             }
@@ -84,7 +86,7 @@ namespace ServiceBase.Infrastructure.Repository
 
         private async Task<CssTask> Update(CssTask cssTask)
         {
-            var sql = "update tasks set name = @name, description = @desc, dueDate = @due, scheduledDate = @scheduled) values(@p1,@p2) returning id";
+            var sql = "update task set name = @name, description = @desc, dueDate = @due, scheduledDate = @scheduled, modifiedDate = @modifiedDate) values(@p1,@p2) returning id";
 
             using (var conn = new NpgsqlConnection(_dbSettings.GetConnectionString()))
             {
@@ -93,7 +95,8 @@ namespace ServiceBase.Infrastructure.Repository
                     name = cssTask.Name,
                     desc = cssTask.Description, 
                     due = cssTask.DueDate, 
-                    scheduled = cssTask.ScheduleDate
+                    scheduled = cssTask.ScheduleDate,
+                    modifiedDate = cssTask.ModifiedDate
                 });
             }
 

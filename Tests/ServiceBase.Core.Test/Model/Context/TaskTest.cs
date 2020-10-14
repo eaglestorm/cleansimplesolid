@@ -27,6 +27,7 @@ namespace ServiceBase.Core.Test.Model.Context
             Assert.False(obj.IsValid());
         }
         
+        [Fact]
         public void CanCreateNew()
         {
             var obj = new CssTask(TaskName );
@@ -62,6 +63,17 @@ namespace ServiceBase.Core.Test.Model.Context
             
             Assert.Equal(dueDate,obj.DueDate);
             Assert.Equal(dueDate, obj.ScheduleDate);  //scheduled date is set as it's null.
+            Assert.True(obj.IsValid());
+        }
+        
+        [Fact]
+        public void CanSetDueDateNull()
+        {
+            var obj = new CssTask(TaskName);
+            obj.SetDueDate(null);
+            
+            Assert.False(obj.DueDate.HasValue);
+            Assert.False(obj.ScheduleDate.HasValue);  //scheduled date is set as it's null.
             Assert.True(obj.IsValid());
         }
         
@@ -138,6 +150,20 @@ namespace ServiceBase.Core.Test.Model.Context
             Assert.True(obj.IsValid());
         }
         
+        [Fact]
+        public void CanSetScheduleDateNull()
+        {
+            var dueDate = DateTimeOffset.Now.AddDays(2);
+            
+            var obj = new CssTask(TaskName);
+            obj.SetDueDate(dueDate);
+            obj.SetScheduledDate(null);
+            
+            Assert.Equal(dueDate,obj.DueDate);
+            Assert.False(obj.ScheduleDate.HasValue);  //scheduled date is set as it's null.
+            Assert.True(obj.IsValid());
+        }
+        
         [Theory]
         [InlineData("01/12/2020","01/11/2020")]
         [InlineData("01/12/2020","01/12/2020")]
@@ -191,6 +217,18 @@ namespace ServiceBase.Core.Test.Model.Context
             obj.SetDescription(description);
             
             Assert.False(obj.IsValid());
+        }
+        
+        [Theory]
+        [InlineData("description")]
+        [InlineData("This is my description !@#$%^&*()")]
+        [InlineData(null)]
+        public void ValidDescription(string description)
+        {
+            var obj = new CssTask(TaskName);
+            obj.SetDescription(description);
+            
+            Assert.True(obj.IsValid());
         }
         
         

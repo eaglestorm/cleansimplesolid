@@ -13,7 +13,7 @@ create table task (
   name varchar(100) not null,
   createdDate timestamp not null,
   modifiedDate timestamp not null,
-  scheduledDate date not null,
-  dueDate date not null,
-  description text not null
+  scheduledDate date null,
+  dueDate date null,
+  description text null
 )

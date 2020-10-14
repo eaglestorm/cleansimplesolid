@@ -9,6 +9,7 @@ namespace ServiceBase.Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<TaskRepository>().As<ITaskRepository>();
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
         }
     }
 }

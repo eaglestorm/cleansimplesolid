@@ -8,6 +8,7 @@ using Autofac.Core;
 using AutoMapper;
 using CleanConnect.Common.Model.Settings;
 using CleanDdd.Common.Model.Settings;
+using CleanSimpleSolid.Core;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,6 +65,7 @@ namespace ServiceBase
         {
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -93,6 +95,7 @@ namespace ServiceBase
             builder.RegisterType<ConfigureJwtBearerOptions>().As<IPostConfigureOptions<JwtBearerOptions>>();
             builder.RegisterType<DbMigrationTask>().As<IStartupTask>();
             builder.RegisterModule(new InfrastructureModule());
+            builder.RegisterModule(new CoreModule());
         }
     }
 }

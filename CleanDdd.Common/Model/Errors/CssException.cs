@@ -9,9 +9,9 @@ namespace CleanDdd.Common.Model.Errors
     /// <remarks>
     /// Should not be used for validation.
     /// </remarks>
-    public class NjantPublishException: Exception
+    public class CssException: Exception
     {
-        public NjantPublishException(
+        public CssException(
             ErrorCode errorCode,
             string message)
         :base(message)

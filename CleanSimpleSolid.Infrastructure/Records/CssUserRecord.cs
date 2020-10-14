@@ -17,12 +17,12 @@ namespace ServiceBase.Infrastructure.Records
         /// <summary>
         /// When the record was created.
         /// </summary>
-        public DateTimeOffset CreatedDate { get; }
+        public DateTimeOffset CreatedDate { get; set; }
         
         /// <summary>
         /// The last time the record was modified.
         /// </summary>
-        public DateTimeOffset ModifiedDate { get; }
+        public DateTimeOffset ModifiedDate { get; set; }
         
         /// <summary>
         /// The name of the user.

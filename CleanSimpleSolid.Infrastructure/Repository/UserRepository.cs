@@ -6,6 +6,7 @@ using CleanSimpleSolid.Core.Model.Tasks;
 using CleanSimpleSolid.Core.Model.User;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using Microsoft.Extensions.Options;
 using Npgsql;
 using ServiceBase.Infrastructure.Records;
 
@@ -16,9 +17,9 @@ namespace ServiceBase.Infrastructure.Repository
         private readonly DbSettings _dbSettings;
         private readonly IMapper _mapper;
 
-        public UserRepository(DbSettings dbSettings, IMapper mapper)
+        public UserRepository(IOptions<DbSettings> dbSettings, IMapper mapper)
         {
-            _dbSettings = dbSettings;
+            _dbSettings = dbSettings.Value;
             _mapper = mapper;
         }
         
@@ -35,7 +36,6 @@ namespace ServiceBase.Infrastructure.Repository
 
         public async Task Insert(CssUser cssUser)
         {
-            var sql = "insert into css_user (subject, name, email) values (@subject, @name, @email)";
 
             var record = _mapper.Map<CssUserRecord>(cssUser);
             

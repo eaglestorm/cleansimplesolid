@@ -31,12 +31,10 @@ namespace ServiceBase.Controllers
         /// <returns></returns>
         // GET
         [Authorize]
+        [HttpGet("/init")]
         public IActionResult Init()
         {
-
-            var tokenString = Request.Headers[HeaderNames.Authorization];
-            
-            _userService.ValidateSubject(tokenString);
+            _userService.ValidateSubject(User);
             
             return Ok();
         }

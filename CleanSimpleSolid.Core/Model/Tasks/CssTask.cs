@@ -52,8 +52,12 @@ namespace CleanSimpleSolid.Core.Model.Tasks
         /// Set the due date of the task validating against the due date of any subtasks.
         /// </summary>
         /// <param name="dueDate"></param>
-        public override void SetDueDate(DateTimeOffset dueDate)
+        public override void SetDueDate(DateTimeOffset? dueDate)
         {
+            if (!dueDate.HasValue)
+            {
+                base.SetDueDate(null);
+            }
             if (Children.Any(x=> x.DueDate > dueDate))
             {
                 Errors.AddError(ErrorCode.InvalidDate, "The due date can't be less than the due date of the children.");

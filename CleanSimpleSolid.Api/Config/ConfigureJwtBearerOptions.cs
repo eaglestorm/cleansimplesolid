@@ -21,18 +21,18 @@ namespace ServiceBase.Config
 
             options.ClaimsIssuer = jwtAuthentication.ValidIssuer;
             options.IncludeErrorDetails = true;
-            options.RequireHttpsMetadata = true;
+            options.RequireHttpsMetadata = false;
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateActor = false,
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = false,
                 ValidIssuer = jwtAuthentication.ValidIssuer,
                 ValidAudience = jwtAuthentication.ValidAudience,
                 IssuerSigningKey = jwtAuthentication.SymmetricSecurityKey,
-                NameClaimType = ClaimTypes.NameIdentifier
+                NameClaimType = ClaimTypes.Name
             };
             options.Authority = _jwtAuthentication.Authority;
             
