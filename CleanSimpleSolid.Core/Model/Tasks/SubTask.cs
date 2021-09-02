@@ -20,12 +20,5 @@ namespace CleanSimpleSolid.Core.Model.Tasks
         {
 
         }
-
-        public bool IsValid()
-        {
-            return Errors.Count == 0;
-        }
-
-        public Validations Errors { get; }
     }
 }

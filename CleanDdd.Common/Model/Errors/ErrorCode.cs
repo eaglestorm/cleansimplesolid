@@ -61,6 +61,8 @@ namespace CleanConnect.Common.Model.Errors
         public static readonly ErrorCode InvalidDueDate = new ErrorCode(ErrorGroup.Validation, 214, "The due date must be in the future.");
         
         public static readonly ErrorCode InvalidScheduledDate = new ErrorCode(ErrorGroup.Validation, 215, "The scheduled date must be in the future.");
+        
+        public static readonly ErrorCode NotFound = new ErrorCode(ErrorGroup.Validation, 216, "The record could not be found.");
         #endregion
 
         

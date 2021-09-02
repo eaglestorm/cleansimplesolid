@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServiceBase.Infrastructure.Records
 {
@@ -27,7 +26,6 @@ namespace ServiceBase.Infrastructure.Records
         /// <summary>
         /// The name of the user.
         /// </summary>
-        [Column("fullName")]
         public string Name { get; set; }
         
         /// <summary>

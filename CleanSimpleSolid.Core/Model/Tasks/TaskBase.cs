@@ -50,6 +50,7 @@ namespace CleanSimpleSolid.Core.Model.Tasks
         public TaskBase(string name)
         {
             Errors = new Validations();
+            Id = new LongIdentity();  //defaults to 0 = not set.
             SetName(name);
             Priority = TaskPriority.Normal;
         }

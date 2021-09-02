@@ -2,6 +2,7 @@ using System.Security.Claims;
 using CleanDdd.Common.Model.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ServiceBase.Config
@@ -31,8 +32,7 @@ namespace ServiceBase.Config
                 ValidateIssuerSigningKey = false,
                 ValidIssuer = jwtAuthentication.ValidIssuer,
                 ValidAudience = jwtAuthentication.ValidAudience,
-                IssuerSigningKey = jwtAuthentication.SymmetricSecurityKey,
-                NameClaimType = ClaimTypes.Name
+                IssuerSigningKey = jwtAuthentication.SymmetricSecurityKey
             };
             options.Authority = _jwtAuthentication.Authority;
             

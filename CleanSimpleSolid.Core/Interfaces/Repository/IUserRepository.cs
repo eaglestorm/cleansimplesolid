@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using CleanSimpleSolid.Core.Model.User;
 
-namespace CleanSimpleSolid.Core.Interfaces
+namespace CleanSimpleSolid.Core.Interfaces.Repository
 {
     public interface IUserRepository
     {
@@ -17,5 +17,12 @@ namespace CleanSimpleSolid.Core.Interfaces
         /// </summary>
         /// <param name="cssUser"></param>
         Task Insert(CssUser cssUser);
+
+        /// <summary>
+        /// Update the user, either after login or from an external event.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task Update(CssUser user);
     }
 }

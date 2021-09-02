@@ -19,10 +19,22 @@ namespace ServiceBase
         private static IConfiguration Configuration { get; set; }
         
         public static async Task Main(string[] args)
-        {          
+        {
+
             //write any exceptions on startup to the log.
             try
             {
+                var currentEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                Configuration = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json")
+                    .AddJsonFile($"appsettings.{currentEnv}.json", optional: true)
+                    .AddEnvironmentVariables()
+                    .Build();
+            
+                Log.Logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(Configuration)
+                    .CreateLogger();
+                
                 var host = CreateWebHostBuilder(args).Build();
                 //run startup task.
                 await host.RunTasksAsync();
@@ -41,13 +53,6 @@ namespace ServiceBase
         private static IWebHostBuilder CreateWebHostBuilder(string[] args) {
             
             //integration tests don't call program.main
-            var currentEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            Configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{currentEnv}.json", optional: true)
-                .AddEnvironmentVariables()
-                .Build();
-            
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
                 .CreateLogger();

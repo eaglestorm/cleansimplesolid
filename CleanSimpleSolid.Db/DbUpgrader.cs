@@ -15,13 +15,14 @@ namespace NjantPublish.Db
             if (env.IsDevelopment())
             {
                 //drop the database and recreate it in dev.
-                DeployChanges.To.PostgresqlDatabase((dbSettings.GetConnectionString()))
+                var upgrade = DeployChanges.To.PostgresqlDatabase((dbSettings.GetConnectionString()))
                     .WithScripts(new IScript[]
                     {
                         new DropScript()
                     })
                     .LogToAutodetectedLog()
                     .Build();
+                upgrade.PerformUpgrade();
             }
 
             Update(".Scripts.Schema", dbSettings);

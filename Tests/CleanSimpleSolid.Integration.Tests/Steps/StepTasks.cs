@@ -9,7 +9,7 @@ namespace CleanSimpleSolid.Integration.Tests.Steps
         [Step("Create Task <name>")]
         public void CreateTask(string name)
         {
-            var response = SetupRequest("/task", new {name});
+            var response = SetupRequest("/task", new {Name = name});
             ValidateOk(response);
             GaugeMessages.WriteMessage(response.Content);
         }

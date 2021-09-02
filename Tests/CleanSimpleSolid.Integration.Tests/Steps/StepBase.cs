@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using FluentAssertions;
@@ -16,17 +17,21 @@ namespace CleanSimpleSolid.Integration.Tests.Steps
     {
         protected IRestResponse SetupRequest(string path, object data)
         {
-            var client = new RestClient(GetUrl(path));
-            var token = GetToken();
-            client.Authenticator = new JwtAuthenticator(token);
-            client.Timeout = -1;
             var request = new RestRequest(Method.PUT);
-
-            //request.AddHeader("Authorization", token);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddParameter("application/json", data, ParameterType.RequestBody);
+            var client = GetClient(ref request, path);
+            //request.AddParameter("application/json", data, ParameterType.RequestBody);
+            request.AddJsonBody(data);
             GaugeMessages.WriteMessage(client.BaseUrl.ToString());
-            
+            IRestResponse response = client.Execute(request);
+            return response;
+        }
+        
+        protected IRestResponse SetupRequest(string path)
+        {
+            var request = new RestRequest(Method.GET);
+            var client = GetClient(ref request, path);
+            //request.AddParameter("application/json", data, ParameterType.RequestBody);
+            GaugeMessages.WriteMessage(client.BaseUrl.ToString());
             IRestResponse response = client.Execute(request);
             return response;
         }
@@ -36,6 +41,17 @@ namespace CleanSimpleSolid.Integration.Tests.Steps
             GaugeMessages.WriteMessage(response.StatusDescription);
             GaugeMessages.WriteMessage(response.Content);
             response.IsSuccessful.Should().BeTrue();
+        }
+
+        private RestClient GetClient(ref RestRequest request, string path)
+        {
+            var client = new RestClient(GetUrl(path));
+            var token = GetToken();
+            client.Authenticator = new JwtAuthenticator(token);
+            client.Timeout = -1;
+            request.AddHeader("Content-Type", "application/json");
+
+            return client;
         }
 
         private Uri GetUrl(string path)
@@ -53,9 +69,10 @@ namespace CleanSimpleSolid.Integration.Tests.Steps
                 "http://localhost:5000",
                 new ClaimsIdentity(new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Email, "testing@jsmith.com.au"),
-                    new Claim(ClaimTypes.Name, "John Smith"),
-                    new Claim(ClaimTypes.NameIdentifier, "jsmith")
+                    new Claim("email", "testing@jsmith.com.au"),
+                    new Claim("name", "John Smith"),
+                    new Claim("email_verified","true"),
+                    new Claim("sub", "jsmith")
                 }),
                 DateTime.UtcNow.AddDays(-1),
                 DateTime.UtcNow.AddDays(1),

@@ -9,6 +9,8 @@ namespace ServiceBase.Core.Messages
 
         public string Name { get; set; }
         
+        public long CreatedBy { get; set; }
+        
         public string Description { get; set; }
         
         public DateTimeOffset DueDate { get; set; }

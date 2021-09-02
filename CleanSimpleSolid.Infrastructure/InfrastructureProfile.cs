@@ -12,7 +12,9 @@ namespace ServiceBase.Infrastructure
         {
             CreateMap<CssTaskRecord, CssTask>();
             CreateMap<long, LongIdentity>().ConstructUsing(x=> new LongIdentity(x));
+            CreateMap<LongIdentity, long>().ConstructUsing(x=> x.Id);
             CreateMap<CssUserRecord, CssUser>();
+            CreateMap<CssUser,CssUserRecord>();
         }
     }
 }

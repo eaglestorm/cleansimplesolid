@@ -5,10 +5,16 @@ using CleanDdd.Common.Model.Identity;
 
 namespace CleanSimpleSolid.Core.Model.Tasks
 {
+    /// <summary>
+    /// A group of tasks, not really sure how this should work.
+    /// </summary>
     public class TaskGroup: Base<LongIdentity, long>, IValidator
     {
         private const int NameMaxLength = 50;
 
+        /// <summary>
+        /// TODO: this needs to be a paginated collection.
+        /// </summary>
         private List<CssTask> _tasks;
         
         public string Name { get; private set; }
@@ -17,14 +23,19 @@ namespace CleanSimpleSolid.Core.Model.Tasks
 
         public TaskGroup(string name)
         {
-            Name = name;
             Errors = new Validations();
             _tasks = new List<CssTask>();
+            SetName(name);
         }
 
         public void SetName(string name)
         {
             var start = Errors.Count;
+            if (string.IsNullOrEmpty(name))
+            {
+                Errors.AddError(ErrorCode.ValueRequired, "A name is required");
+                return;
+            }
             if (!RegexConstants.NameRegex.IsMatch(name) || string.IsNullOrEmpty(name))
             {
                 Errors.AddError(ErrorCode.InvalidName, "The name is not valid");

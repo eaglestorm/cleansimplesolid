@@ -4,7 +4,10 @@ namespace CleanDdd.Common.Model.Identity
 {
     public class LongIdentity: IDbIdentity<long>
     {
-       
+        public LongIdentity()
+        {
+            
+        }
 
         public LongIdentity(long id)
         {

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CleanConnect.Common.Contracts;
 using CleanConnect.Common.Model.Errors;
 using CleanSimpleSolid.Core.Interfaces;
+using CleanSimpleSolid.Core.Interfaces.Repository;
 using ServiceBase.Core.Messages;
 
 namespace ServiceBase.Core.UseCase

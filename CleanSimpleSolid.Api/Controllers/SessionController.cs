@@ -15,8 +15,7 @@ namespace ServiceBase.Controllers
     public class SessionController : Controller
     {
         /// <summary>
-        /// Notice this doesn't use an interface.  It's always used within the core
-        /// project, doesn't need IoC so I see no reason to.
+        /// Notice this doesn't use an interface.  It's not using an interface
         /// </summary>
         private readonly UserService _userService;
 

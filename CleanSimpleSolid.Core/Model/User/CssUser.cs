@@ -10,6 +10,10 @@ namespace CleanSimpleSolid.Core.Model.User
     /// </summary>
     public class CssUser: Base<LongIdentity, long>, IValidator
     {
+        // Max lengths based on database.
+        public const int NameMaxLength = 255;
+        public const int SubjectMaxLength = 255;
+        public const int EmailMaxLength = 100;
         /// <summary>
         /// Database identity.
         /// </summary>
@@ -23,7 +27,7 @@ namespace CleanSimpleSolid.Core.Model.User
         /// <summary>
         /// External identifier for the user.  Should only change once.
         /// </summary>
-        public string Subject { get; }
+        public string Subject { get; private set; }
 
         /// <summary>
         /// We require all users to have an email.
@@ -31,33 +35,34 @@ namespace CleanSimpleSolid.Core.Model.User
         public string Email { get; private set; }
 
         /// <summary>
-        /// The id token contains a new user.
+        /// The id token contains a new user.  should be used for new users only
         /// </summary>
         /// <param name="name"></param>
         /// <param name="subject"></param>
         public CssUser(string name, string subject, string email)
         {
-            Name = name;
-            Subject = subject;
-            Email = email;
+            Id = new LongIdentity();
             Errors = new Validations();
+            SetName(name);
+            SetSubject(subject);
+            SetEmail(email);
         }
 
         /// <summary>
         /// User created from database record.
         /// </summary>
-        /// <param name="identity"></param>
+        /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="subject"></param>
         /// <param name="createdDate"></param>
         /// <param name="modifiedDate"></param>
-        public CssUser(LongIdentity identity,string name, string subject, string email, DateTimeOffset createdDate, DateTimeOffset modifiedDate)
-        :base(identity,createdDate,modifiedDate)
+        public CssUser(LongIdentity id,string name, string subject, string email, DateTimeOffset createdDate, DateTimeOffset modifiedDate)
+        :base(id,createdDate,modifiedDate)
         {
-            Name = name;
-            Subject = subject;
-            Email = email;
             Errors = new Validations();
+            SetName(name);
+            SetSubject(subject);
+            SetEmail(email);
         }
 
         public bool IsValid()
@@ -69,7 +74,12 @@ namespace CleanSimpleSolid.Core.Model.User
 
         public void SetName(string name)
         {
-            if (RegexConstants.NameRegex.IsMatch(name))
+            if (string.IsNullOrEmpty(name))
+            {
+                Errors.AddError(ErrorCode.ValueRequired, "The name is required");
+                return;
+            }
+            if (RegexConstants.NameRegex.IsMatch(name) && name.Length <= NameMaxLength)
             {
                 Name = name;
             }
@@ -81,13 +91,30 @@ namespace CleanSimpleSolid.Core.Model.User
 
         public void SetEmail(string email)
         {
-            if (RegexConstants.EmailRegex.IsMatch(email))
+            if (string.IsNullOrEmpty(email))
+            {
+                Errors.AddError(ErrorCode.ValueRequired, "The name is required");
+                return;
+            }
+            if (RegexConstants.EmailRegex.IsMatch(email) && email.Length <= EmailMaxLength)
             {
                 Email = email;
             }
             else
             {
                 Errors.AddError(ErrorCode.InvalidEmail, "The supplied email is not valid.");
+            }
+        }
+
+        private void SetSubject(string subject)
+        {
+            if (string.IsNullOrEmpty(subject))
+            {
+                Errors.AddError(ErrorCode.ValueRequired, "The subject is required.");
+            }
+            else
+            {
+                Subject = subject;
             }
         }
     }

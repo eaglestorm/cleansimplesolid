@@ -4,6 +4,7 @@ using AutoMapper;
 using CleanConnect.Common.Model.Settings;
 using CleanDdd.Common.Model.Identity;
 using CleanSimpleSolid.Core.Interfaces;
+using CleanSimpleSolid.Core.Interfaces.Repository;
 using CleanSimpleSolid.Core.Model.Tasks;
 using Dapper;
 using Microsoft.Extensions.Options;
